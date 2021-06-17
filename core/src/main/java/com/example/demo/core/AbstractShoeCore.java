@@ -7,7 +7,7 @@ import lombok.val;
 import org.springframework.beans.FatalBeanException;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public abstract class AbstractShoeCore implements ShoeCore {
+public abstract class AbstractShoeCore implements com.example.demo.core.ShoeCore {
 
   @Autowired
   private ShoeFacade shoeFacade;

@@ -18,6 +18,14 @@
             <version>${project.version}</version>
         </dependency>
 
+        <!--DB-->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+            <version>1.4.200</version>
+        </dependency>
+
     </dependencies>
 
 </project>

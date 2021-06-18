@@ -1,0 +1,16 @@
+DROP TABLE IF EXISTS stock;
+DROP TABLE IF EXISTS shoe;
+
+CREATE TABLE stock (
+  stock_id INT AUTO_INCREMENT PRIMARY KEY
+);
+
+CREATE TABLE shoe (
+  shoe_id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(250) NOT NULL,
+  size INT NOT NULL,
+  color VARCHAR(250) DEFAULT NULL,
+  stock_id INT NOT NULL,
+  FOREIGN KEY (stock_id) REFERENCES stock(stock_id)
+);
+

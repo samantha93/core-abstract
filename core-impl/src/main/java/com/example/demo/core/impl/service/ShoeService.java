@@ -3,18 +3,27 @@ package com.example.demo.core.impl.service;
 
 import com.example.demo.core.AbstractShoeCore;
 import com.example.demo.core.Implementation;
+import com.example.demo.core.impl.service.com.example.demo.core.impl.entity.ShoeEntity;
+import com.example.demo.core.impl.service.com.example.demo.core.impl.repository.ShoeRepository;
+import com.example.demo.core.impl.service.com.example.demo.core.impl.transformer.ShoesTransformer;
 import com.example.demo.dto.in.ShoeFilter;
-import com.example.demo.dto.out.Shoe;
 import com.example.demo.dto.out.Shoes;
+import lombok.RequiredArgsConstructor;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @Implementation(version = 1)
+@RequiredArgsConstructor
 public class ShoeService extends AbstractShoeCore {
 
-    @Override
-    public Shoes search(ShoeFilter filter) {
-        // Call DB
-        return Shoes.builder().shoes(List.of(Shoe.builder().color(ShoeFilter.Color.BLACK).name("SamSam").build())).build();
-    }
+  private final ShoeRepository shoeRepository;
+
+  @Override
+  public Shoes search(ShoeFilter filter) {
+    // TODO define default
+    List<ShoeEntity> shoeEntities = shoeRepository.findByColorAndSize(filter.getColor().orElse(null), filter.getSize().orElse(BigInteger.ZERO).intValue());
+    return ShoesTransformer.toShoesDto(shoeEntities);
+  }
+
 }

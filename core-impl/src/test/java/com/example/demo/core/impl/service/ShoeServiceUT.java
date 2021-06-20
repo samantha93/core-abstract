@@ -1,60 +1,72 @@
 package com.example.demo.core.impl.service;
 
+import com.example.demo.core.impl.service.com.example.demo.core.impl.entity.ShoeEntity;
+import com.example.demo.core.impl.service.com.example.demo.core.impl.repository.ShoeRepository;
 import com.example.demo.dto.in.ShoeFilter;
 import com.example.demo.dto.out.Shoes;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.math.BigInteger;
+import java.util.Collections;
+import java.util.List;
 
+@ExtendWith(SpringExtension.class)
 public class ShoeServiceUT {
 
-    @InjectMocks
-    private ShoeService shoeService;
+  @Mock
+  private ShoeRepository shoeRepository;
 
-    @BeforeEach
-    public void before() {
-        shoeService = new ShoeService();
-    }
+  @InjectMocks
+  private ShoeService shoeService;
 
-    @Test
-    public void search_noShoesExist_returnEmptyList() {
-        // Given
-        ShoeFilter filter = new ShoeFilter(BigInteger.valueOf(42), ShoeFilter.Color.BLACK);
+  @BeforeEach
+  public void before() {
+    shoeService = new ShoeService(shoeRepository);
+  }
 
-        // When
-        Shoes actual = shoeService.search(filter);
+  @Test
+  public void search_shoesExistAndDoNotMatch_returnEmptyList() {
+    // Given
+    BigInteger actualSearchSize = BigInteger.valueOf(42);
+    ShoeFilter.Color actualSearchColor = ShoeFilter.Color.BLACK;
+    ShoeFilter filter = new ShoeFilter(actualSearchSize, actualSearchColor);
+    Mockito.when(shoeRepository.findByColorAndSize(actualSearchColor, actualSearchSize.intValue())).thenReturn(Collections.emptyList());
 
-        // Then
-        Assertions.assertTrue(actual.getShoes().isEmpty());
-    }
+    // When
+    Shoes actual = shoeService.search(filter);
 
-    @Test
-    public void search_shoesExistAndDoNotMatch_returnEmptyList() {
-        // Given
-        ShoeFilter filter = new ShoeFilter(BigInteger.valueOf(42), ShoeFilter.Color.BLACK);
+    // Then
+    Assertions.assertTrue(actual.getShoes().isEmpty());
+    Mockito.verify(shoeRepository, Mockito.times(1)).findByColorAndSize(Mockito.any(), Mockito.anyInt());
+  }
 
-        // When
-        Shoes actual = shoeService.search(filter);
+  @Test
+  public void search_shoesExistAndMatch_returnMatchedShoes() {
+    // Given
+    int actualSize = 42;
+    BigInteger actualSearchSize = BigInteger.valueOf(actualSize);
+    ShoeFilter.Color actualSearchColor = ShoeFilter.Color.BLACK;
+    ShoeFilter filter = new ShoeFilter(actualSearchSize, actualSearchColor);
 
-        // Then
-        Assertions.assertTrue(actual.getShoes().isEmpty());
-    }
+    List<ShoeEntity> shoe1 = List.of(new ShoeEntity(159, "Puma Running", actualSize, actualSearchColor, 789));
+    Mockito.when(shoeRepository.findByColorAndSize(actualSearchColor, actualSize)).thenReturn(shoe1);
 
-    @Test
-    public void search_shoesExistAndMatch_returnMatchedShoes() {
-        // Given
-        ShoeFilter filter = new ShoeFilter(BigInteger.valueOf(42), ShoeFilter.Color.BLACK);
+    // When
+    Shoes actual = shoeService.search(filter);
 
-        // When
-        Shoes actual = shoeService.search(filter);
-
-        // Then
-        Assertions.assertFalse(actual.getShoes().isEmpty());
-        Assertions.assertEquals(actual.getShoes().get(0).getColor(), ShoeFilter.Color.BLACK);
-        Assertions.assertEquals(actual.getShoes().get(0).getSize(), BigInteger.valueOf(42));
-    }
+    // Then
+    Assertions.assertFalse(actual.getShoes().isEmpty());
+    Assertions.assertEquals(actual.getShoes().size(), 1);
+    Assertions.assertEquals(actual.getShoes().get(0).getColor(), ShoeFilter.Color.BLACK);
+    Assertions.assertEquals(actual.getShoes().get(0).getSize(), BigInteger.valueOf(42));
+    Mockito.verify(shoeRepository, Mockito.times(1)).findByColorAndSize(Mockito.any(), Mockito.anyInt());
+  }
 
 }

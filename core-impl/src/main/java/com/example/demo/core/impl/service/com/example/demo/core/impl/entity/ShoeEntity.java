@@ -28,7 +28,4 @@ public class ShoeEntity {
   @Enumerated(EnumType.STRING)
   private ShoeFilter.Color color;
 
-  // TODO Handle foreign key with stock entity
-  @Column(name = "stock_id", nullable = false)
-  private int stockId;
 }

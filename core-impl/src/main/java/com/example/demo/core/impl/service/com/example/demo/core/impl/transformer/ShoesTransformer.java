@@ -10,12 +10,12 @@ import java.util.stream.Collectors;
 
 public class ShoesTransformer {
 
-  public static Shoes toShoesDto(List<ShoeEntity> shoeEntities) {
-    List<Shoe> shoes = shoeEntities.stream().map(ShoesTransformer::toShoeDto).collect(Collectors.toList());
+  public static Shoes toShoes(List<ShoeEntity> shoeEntities) {
+    List<Shoe> shoes = shoeEntities.stream().map(ShoesTransformer::toShoe).collect(Collectors.toList());
     return Shoes.builder().shoes(shoes).build();
   }
 
-  private static Shoe toShoeDto(ShoeEntity shoeEntity) {
+  private static Shoe toShoe(ShoeEntity shoeEntity) {
     return Shoe.builder()
             .name(shoeEntity.getName())
             .color(shoeEntity.getColor())

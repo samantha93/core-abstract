@@ -2,6 +2,7 @@ package com.example.demo.core.impl.service;
 
 import com.example.demo.core.impl.service.com.example.demo.core.impl.entity.ShoeEntity;
 import com.example.demo.core.impl.service.com.example.demo.core.impl.repository.ShoeRepository;
+import com.example.demo.core.impl.service.com.example.demo.core.impl.service.ShoeService;
 import com.example.demo.dto.in.ShoeFilter;
 import com.example.demo.dto.out.Shoes;
 import org.junit.jupiter.api.Assertions;
@@ -25,11 +26,6 @@ public class ShoeServiceUT {
 
   @InjectMocks
   private ShoeService shoeService;
-
-  @BeforeEach
-  public void before() {
-    shoeService = new ShoeService(shoeRepository);
-  }
 
   @Test
   public void search_shoesExistAndDoNotMatch_returnEmptyList() {
@@ -55,7 +51,7 @@ public class ShoeServiceUT {
     ShoeFilter.Color actualSearchColor = ShoeFilter.Color.BLACK;
     ShoeFilter filter = new ShoeFilter(actualSearchSize, actualSearchColor);
 
-    List<ShoeEntity> shoe1 = List.of(new ShoeEntity(159, "Puma Running", actualSize, actualSearchColor, 789));
+    List<ShoeEntity> shoe1 = List.of(new ShoeEntity(159, "Puma Running", actualSize, actualSearchColor));
     Mockito.when(shoeRepository.findByColorAndSize(actualSearchColor, actualSize)).thenReturn(shoe1);
 
     // When
@@ -63,9 +59,9 @@ public class ShoeServiceUT {
 
     // Then
     Assertions.assertFalse(actual.getShoes().isEmpty());
-    Assertions.assertEquals(actual.getShoes().size(), 1);
-    Assertions.assertEquals(actual.getShoes().get(0).getColor(), ShoeFilter.Color.BLACK);
-    Assertions.assertEquals(actual.getShoes().get(0).getSize(), BigInteger.valueOf(42));
+    Assertions.assertEquals(1, actual.getShoes().size());
+    Assertions.assertEquals(ShoeFilter.Color.BLACK, actual.getShoes().get(0).getColor());
+    Assertions.assertEquals(BigInteger.valueOf(42), actual.getShoes().get(0).getSize());
     Mockito.verify(shoeRepository, Mockito.times(1)).findByColorAndSize(Mockito.any(), Mockito.anyInt());
   }
 

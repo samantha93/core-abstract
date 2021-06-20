@@ -1,4 +1,4 @@
-package com.example.demo.core.impl.service;
+package com.example.demo.core.impl.service.com.example.demo.core.impl.service;
 
 
 import com.example.demo.core.AbstractShoeCore;
@@ -23,7 +23,7 @@ public class ShoeService extends AbstractShoeCore {
   public Shoes search(ShoeFilter filter) {
     // TODO define default
     List<ShoeEntity> shoeEntities = shoeRepository.findByColorAndSize(filter.getColor().orElse(null), filter.getSize().orElse(BigInteger.ZERO).intValue());
-    return ShoesTransformer.toShoesDto(shoeEntities);
+    return ShoesTransformer.toShoes(shoeEntities);
   }
 
 }

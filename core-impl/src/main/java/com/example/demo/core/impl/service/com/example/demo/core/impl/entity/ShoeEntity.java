@@ -28,4 +28,8 @@ public class ShoeEntity {
   @Enumerated(EnumType.STRING)
   private ShoeFilter.Color color;
 
+  @Column(name = "quantity", nullable = false)
+  private int quantity;
+
+
 }

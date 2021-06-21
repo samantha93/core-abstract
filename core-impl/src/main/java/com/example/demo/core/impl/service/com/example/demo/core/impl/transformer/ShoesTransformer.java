@@ -10,6 +10,10 @@ import java.util.stream.Collectors;
 
 public class ShoesTransformer {
 
+  public static List<Shoe> toShoesList(List<ShoeEntity> shoeEntities) {
+    return shoeEntities.stream().map(ShoesTransformer::toShoe).collect(Collectors.toList());
+  }
+
   public static Shoes toShoes(List<ShoeEntity> shoeEntities) {
     List<Shoe> shoes = shoeEntities.stream().map(ShoesTransformer::toShoe).collect(Collectors.toList());
     return Shoes.builder().shoes(shoes).build();
@@ -20,6 +24,7 @@ public class ShoesTransformer {
             .name(shoeEntity.getName())
             .color(shoeEntity.getColor())
             .size(BigInteger.valueOf(shoeEntity.getSize()))
+            .quantity(shoeEntity.getQuantity())
             .build();
   }
 }

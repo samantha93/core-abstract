@@ -10,7 +10,6 @@ import com.example.demo.dto.in.ShoeFilter;
 import com.example.demo.dto.out.Shoes;
 import lombok.RequiredArgsConstructor;
 
-import java.math.BigInteger;
 import java.util.List;
 
 @Implementation(version = 1)
@@ -22,7 +21,9 @@ public class ShoeService extends AbstractShoeCore {
   @Override
   public Shoes search(ShoeFilter filter) {
     // TODO define default
-    List<ShoeEntity> shoeEntities = shoeRepository.findByColorAndSize(filter.getColor().orElse(null), filter.getSize().orElse(BigInteger.ZERO).intValue());
+    List<ShoeEntity> shoeEntities = shoeRepository.findByColorAndSize(
+            filter.getColor().orElse(null),
+            filter.getSize().isPresent() ? filter.getSize().get().intValue() : null);
     return ShoesTransformer.toShoes(shoeEntities);
   }
 

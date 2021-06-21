@@ -51,7 +51,7 @@ public class ShoeServiceUT {
     ShoeFilter.Color actualSearchColor = ShoeFilter.Color.BLACK;
     ShoeFilter filter = new ShoeFilter(actualSearchSize, actualSearchColor);
 
-    List<ShoeEntity> shoe1 = List.of(new ShoeEntity(159, "Puma Running", actualSize, actualSearchColor));
+    List<ShoeEntity> shoe1 = List.of(new ShoeEntity(159, "Puma Running", actualSize, actualSearchColor, 12));
     Mockito.when(shoeRepository.findByColorAndSize(actualSearchColor, actualSize)).thenReturn(shoe1);
 
     // When

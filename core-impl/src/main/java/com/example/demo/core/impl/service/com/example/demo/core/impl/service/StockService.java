@@ -13,6 +13,7 @@ import com.example.demo.dto.in.ShoesStorage;
 import com.example.demo.dto.out.Stock;
 import lombok.RequiredArgsConstructor;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Implementation(version = 1)
@@ -41,6 +42,11 @@ public class StockService extends AbstractStockCore {
 
     List<ShoeEntity> updatedEntities = shoeRepository.findAll();
     return StockTransformer.toStock(updatedEntities, stockProperties.getCapacity());
+  }
+
+  @Override
+  public void clearAll() {
+    shoeRepository.deleteAll();
   }
 
   private void isValid(List<ShoeEntity> actualShoes, List<ShoeEntity> newShoes) {

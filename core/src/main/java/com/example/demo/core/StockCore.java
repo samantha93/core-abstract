@@ -8,4 +8,7 @@ public interface StockCore {
   Stock getState();
 
   Stock updateStorage(ShoesStorage shoesStorage);
+
+  void clearAll();
 }
+

@@ -1,11 +1,13 @@
 package com.example.demo.dto.in;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigInteger;
 
 @Data
+@Builder
 public class NewShoe {
 
   @JsonProperty("name")

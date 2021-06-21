@@ -1,7 +1,6 @@
 package com.example.demo.core.impl.service.com.example.demo.core.impl.transformer;
 
 import com.example.demo.core.impl.service.com.example.demo.core.impl.entity.ShoeEntity;
-import com.example.demo.dto.in.ShoesStorage;
 import com.example.demo.dto.out.Shoe;
 import com.example.demo.dto.out.Shoes;
 

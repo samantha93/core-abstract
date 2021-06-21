@@ -20,7 +20,7 @@ public class ShoeController {
   @GetMapping(path = "/search")
   public ResponseEntity<Shoes> all(ShoeFilter filter, @RequestHeader Integer version){
 
-    return ResponseEntity.ok(shoeFacade.get(version).search(filter));
+    return ResponseEntity.ok(shoeFacade.get(version).findAll(filter));
 
   }
 

@@ -6,7 +6,6 @@ import com.example.demo.core.impl.service.com.example.demo.core.impl.service.Sho
 import com.example.demo.dto.in.ShoeFilter;
 import com.example.demo.dto.out.Shoes;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -36,7 +35,7 @@ public class ShoeServiceUT {
     Mockito.when(shoeRepository.findByColorAndSize(actualSearchColor, actualSearchSize.intValue())).thenReturn(Collections.emptyList());
 
     // When
-    Shoes actual = shoeService.search(filter);
+    Shoes actual = shoeService.findAll(filter);
 
     // Then
     Assertions.assertTrue(actual.getShoes().isEmpty());
@@ -55,7 +54,7 @@ public class ShoeServiceUT {
     Mockito.when(shoeRepository.findByColorAndSize(actualSearchColor, actualSize)).thenReturn(shoe1);
 
     // When
-    Shoes actual = shoeService.search(filter);
+    Shoes actual = shoeService.findAll(filter);
 
     // Then
     Assertions.assertFalse(actual.getShoes().isEmpty());

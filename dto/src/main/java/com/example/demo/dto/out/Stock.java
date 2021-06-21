@@ -14,7 +14,7 @@ public class Stock {
 
   StockState state;
 
-  List<Shoe> shoes;
+  List<ShoeStorage> shoes;
 
   @JsonPOJOBuilder(withPrefix = "")
   public static class StockBuilder {

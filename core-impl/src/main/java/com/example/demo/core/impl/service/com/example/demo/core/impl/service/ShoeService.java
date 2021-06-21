@@ -19,7 +19,7 @@ public class ShoeService extends AbstractShoeCore {
   private final ShoeRepository shoeRepository;
 
   @Override
-  public Shoes search(ShoeFilter filter) {
+  public Shoes findAll(ShoeFilter filter) {
     // TODO define default
     List<ShoeEntity> shoeEntities = shoeRepository.findByColorAndSize(
             filter.getColor().orElse(null),

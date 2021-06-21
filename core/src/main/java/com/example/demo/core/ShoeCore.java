@@ -5,6 +5,6 @@ import com.example.demo.dto.out.Shoes;
 
 public interface ShoeCore {
 
-  Shoes search(ShoeFilter filter);
+  Shoes findAll(ShoeFilter filter);
 
 }

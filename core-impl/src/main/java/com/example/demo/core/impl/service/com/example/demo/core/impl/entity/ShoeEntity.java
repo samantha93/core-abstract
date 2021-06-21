@@ -8,13 +8,14 @@ import javax.persistence.*;
 @Entity
 @Table(name = "shoe")
 @Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
 public class ShoeEntity {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "shoe_id", nullable = false)
   private Integer id;
 

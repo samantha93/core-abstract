@@ -3,24 +3,25 @@ package com.example.demo.core.impl.service.com.example.demo.core.impl.transforme
 import com.example.demo.core.impl.service.com.example.demo.core.impl.entity.ShoeEntity;
 import com.example.demo.dto.in.ShoesStorage;
 import com.example.demo.dto.out.Shoe;
+import com.example.demo.dto.out.ShoeStorage;
 import com.example.demo.dto.out.Shoes;
 
 import java.math.BigInteger;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ShoesTransformer {
+public class ShoesStorageTransformer {
 
-  public static Shoes toShoes(List<ShoeEntity> shoeEntities) {
-    List<Shoe> shoes = shoeEntities.stream().map(ShoesTransformer::toShoe).collect(Collectors.toList());
-    return Shoes.builder().shoes(shoes).build();
+  public static List<ShoeStorage> toShoesList(List<ShoeEntity> shoeEntities) {
+    return shoeEntities.stream().map(ShoesStorageTransformer::toShoeStorage).collect(Collectors.toList());
   }
 
-  private static Shoe toShoe(ShoeEntity shoeEntity) {
-    return Shoe.builder()
+  private static ShoeStorage toShoeStorage(ShoeEntity shoeEntity) {
+    return ShoeStorage.builder()
             .name(shoeEntity.getName())
             .color(shoeEntity.getColor())
             .size(BigInteger.valueOf(shoeEntity.getSize()))
+            .quantity(shoeEntity.getQuantity())
             .build();
   }
 }

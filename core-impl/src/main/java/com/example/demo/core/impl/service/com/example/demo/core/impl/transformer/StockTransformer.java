@@ -2,6 +2,7 @@ package com.example.demo.core.impl.service.com.example.demo.core.impl.transforme
 
 import com.example.demo.core.impl.service.com.example.demo.core.impl.entity.ShoeEntity;
 import com.example.demo.dto.out.Shoe;
+import com.example.demo.dto.out.ShoeStorage;
 import com.example.demo.dto.out.Stock;
 import com.example.demo.dto.out.StockState;
 
@@ -10,8 +11,8 @@ import java.util.List;
 public class StockTransformer {
 
   public static Stock toStock(List<ShoeEntity> shoeEntities, int capacity) {
-    List<Shoe> shoes = ShoesTransformer.toShoesList(shoeEntities);
-    int totalShoes = shoes.stream().mapToInt(Shoe::getQuantity).sum();
+    List<ShoeStorage> shoes = ShoesStorageTransformer.toShoesList(shoeEntities);
+    int totalShoes = shoes.stream().mapToInt(ShoeStorage::getQuantity).sum();
 
     StockState state = StockState.SOME;
     if (totalShoes == 0) {

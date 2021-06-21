@@ -14,4 +14,5 @@ public interface ShoeRepository extends CrudRepository<ShoeEntity, Integer> {
 
   List<ShoeEntity> findAll();
 
+
 }

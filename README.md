@@ -127,6 +127,9 @@ curl --location --request DELETE 'http://localhost:8080/stock/' \
 --header 'Content-Type: application/json'
 ```
 
+## Testing
+You can import Postman collection available in [doc folder](doc/Decathlon.postman_collection.json)
+
 ## Doc
 [Explanations](doc/Explanations.md#explanations)
 

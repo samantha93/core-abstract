@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "df98120c-24e6-485c-9006-3a9710b48270",
+		"name": "Decathlon",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get shoes",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "version",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/shoes/search?color=BLACK&size=42",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"shoes",
+						"search"
+					],
+					"query": [
+						{
+							"key": "color",
+							"value": "BLACK"
+						},
+						{
+							"key": "size",
+							"value": "42"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get stock state",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "version",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/stock/state",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"stock",
+						"state"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update storage",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "version",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"shoes\": [\r\n        {\r\n            \"name\": \"Nike Air Force2\",\r\n            \"size\": 42,\r\n            \"quantity\": 9,\r\n            \"color\": \"BLUE\"\r\n        },\r\n        {\r\n            \"name\": \"Puma Running\",\r\n            \"size\": 49,\r\n            \"quantity\": 21,\r\n            \"color\": \"BLACK\"\r\n        }\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/stock",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"stock"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete all",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "version",
+						"value": "1",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/stock/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"stock",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -20,11 +20,28 @@ public class ShoeService extends AbstractShoeCore {
 
   @Override
   public Shoes findAll(ShoeFilter filter) {
-    // TODO define default
-    List<ShoeEntity> shoeEntities = shoeRepository.findByColorAndSize(
-            filter.getColor().orElse(null),
-            filter.getSize().isPresent() ? filter.getSize().get().intValue() : null);
-    return ShoesTransformer.toShoes(shoeEntities);
+    List<ShoeEntity> shoeEntities;
+    if (filter.getSize().isEmpty() && filter.getColor().isEmpty()) {
+      shoeEntities = shoeRepository.findAll();
+      return ShoesTransformer.toShoes(shoeEntities);
+    }
+
+    if (filter.getSize().isPresent() && filter.getColor().isPresent()) {
+      shoeEntities = shoeRepository.findByColorAndSize(filter.getColor().get(), filter.getSize().get().intValue());
+      return ShoesTransformer.toShoes(shoeEntities);
+    }
+
+    if (filter.getSize().isPresent()) {
+      shoeEntities = shoeRepository.findBySize(filter.getSize().get().intValue());
+      return ShoesTransformer.toShoes(shoeEntities);
+    }
+
+    if (filter.getColor().isPresent()) {
+      shoeEntities = shoeRepository.findByColor(filter.getColor().get());
+      return ShoesTransformer.toShoes(shoeEntities);
+    }
+
+    return ShoesTransformer.toEmptyShoes();
   }
 
 }

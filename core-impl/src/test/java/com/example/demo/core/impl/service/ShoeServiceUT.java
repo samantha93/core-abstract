@@ -43,25 +43,81 @@ public class ShoeServiceUT {
   }
 
   @Test
-  public void search_shoesExistAndMatch_returnMatchedShoes() {
+  public void search_shoesExistAndMatchOnlyColor_shouldCallFindByColor() {
     // Given
     int actualSize = 42;
-    BigInteger actualSearchSize = BigInteger.valueOf(actualSize);
     ShoeFilter.Color actualSearchColor = ShoeFilter.Color.BLACK;
-    ShoeFilter filter = new ShoeFilter(actualSearchSize, actualSearchColor);
+    ShoeFilter filter = new ShoeFilter(null, actualSearchColor);
 
     List<ShoeEntity> shoe1 = List.of(new ShoeEntity(159, "Puma Running", actualSize, actualSearchColor, 12));
-    Mockito.when(shoeRepository.findByColorAndSize(actualSearchColor, actualSize)).thenReturn(shoe1);
 
     // When
     Shoes actual = shoeService.findAll(filter);
 
     // Then
-    Assertions.assertFalse(actual.getShoes().isEmpty());
-    Assertions.assertEquals(1, actual.getShoes().size());
-    Assertions.assertEquals(ShoeFilter.Color.BLACK, actual.getShoes().get(0).getColor());
-    Assertions.assertEquals(BigInteger.valueOf(42), actual.getShoes().get(0).getSize());
+    Mockito.verify(shoeRepository, Mockito.never()).findBySize(Mockito.anyInt());
+    Mockito.verify(shoeRepository, Mockito.times(1)).findByColor(Mockito.any());
+    Mockito.verify(shoeRepository, Mockito.never()).findByColorAndSize(Mockito.any(), Mockito.anyInt());
+    Mockito.verify(shoeRepository, Mockito.never()).findAll();
+  }
+
+  @Test
+  public void search_shoesExistAndMatchOnlySize_shouldCallFindBySize() {
+    // Given
+    int actualSize = 42;
+    BigInteger actualSearchSize = BigInteger.valueOf(actualSize);
+    ShoeFilter.Color actualSearchColor = ShoeFilter.Color.BLACK;
+    ShoeFilter filter = new ShoeFilter(actualSearchSize, null);
+
+    List<ShoeEntity> shoe1 = List.of(new ShoeEntity(159, "Puma Running", actualSize, actualSearchColor, 12));
+
+    // When
+    shoeService.findAll(filter);
+
+    // Then
+    Mockito.verify(shoeRepository, Mockito.times(1)).findBySize(Mockito.anyInt());
+    Mockito.verify(shoeRepository, Mockito.never()).findByColor(Mockito.any());
+    Mockito.verify(shoeRepository, Mockito.never()).findByColorAndSize(Mockito.any(), Mockito.anyInt());
+    Mockito.verify(shoeRepository, Mockito.never()).findAll();
+  }
+
+  @Test
+  public void search_shoesExistAndMatchSizeAndColor_shouldCallFindByColorAndSize() {
+    // Given
+    int actualSize = 42;
+    BigInteger actualSearchSize = BigInteger.valueOf(actualSize);
+    ShoeFilter.Color actualSearchColor = ShoeFilter.Color.BLACK;
+    ShoeFilter filter = new ShoeFilter(actualSearchSize, ShoeFilter.Color.BLACK);
+
+    List<ShoeEntity> shoe1 = List.of(new ShoeEntity(159, "Puma Running", actualSize, actualSearchColor, 12));
+
+    // When
+    shoeService.findAll(filter);
+
+    // Then
+    Mockito.verify(shoeRepository, Mockito.never()).findBySize(Mockito.anyInt());
+    Mockito.verify(shoeRepository, Mockito.never()).findByColor(Mockito.any());
     Mockito.verify(shoeRepository, Mockito.times(1)).findByColorAndSize(Mockito.any(), Mockito.anyInt());
+    Mockito.verify(shoeRepository, Mockito.never()).findAll();
+  }
+
+  @Test
+  public void search_shoesExistButNoFilterSet_shouldCallFindAll() {
+    // Given
+    int actualSize = 42;
+    ShoeFilter.Color actualSearchColor = ShoeFilter.Color.BLACK;
+    ShoeFilter filter = new ShoeFilter(null, null);
+
+    List<ShoeEntity> shoe1 = List.of(new ShoeEntity(159, "Puma Running", actualSize, actualSearchColor, 12));
+
+    // When
+    shoeService.findAll(filter);
+
+    // Then
+    Mockito.verify(shoeRepository, Mockito.never()).findBySize(Mockito.anyInt());
+    Mockito.verify(shoeRepository, Mockito.never()).findByColor(Mockito.any());
+    Mockito.verify(shoeRepository, Mockito.never()).findByColorAndSize(Mockito.any(), Mockito.anyInt());
+    Mockito.verify(shoeRepository, Mockito.times(1)).findAll();
   }
 
 }

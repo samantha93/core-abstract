@@ -10,7 +10,11 @@ import java.util.List;
 @Repository
 public interface ShoeRepository extends CrudRepository<ShoeEntity, Integer> {
 
-  List<ShoeEntity> findByColorAndSize(ShoeFilter.Color color, Integer size);
+  List<ShoeEntity> findByColorAndSize(ShoeFilter.Color color, int size);
+
+  List<ShoeEntity> findByColor(ShoeFilter.Color color);
+
+  List<ShoeEntity> findBySize(int size);
 
   List<ShoeEntity> findAll();
 

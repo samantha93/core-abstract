@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
 
 public class ShoesTransformer {
 
+  public static Shoes toEmptyShoes() {
+    return Shoes.builder().build();
+  }
   public static Shoes toShoes(List<ShoeEntity> shoeEntities) {
     List<Shoe> shoes = shoeEntities.stream().map(ShoesTransformer::toShoe).collect(Collectors.toList());
     return Shoes.builder().shoes(shoes).build();

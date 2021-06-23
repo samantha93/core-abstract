@@ -10,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @Controller
 @RequestMapping(path = "/stock")
 @RequiredArgsConstructor
@@ -25,7 +23,7 @@ public class StockController {
   }
 
   @PatchMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Stock> updateStorage(@RequestHeader Integer version, @Valid @RequestBody ShoesStorage shoesStorage) {
+  public ResponseEntity<Stock> updateStorage(@RequestHeader Integer version, @RequestBody ShoesStorage shoesStorage) {
     return ResponseEntity.ok(stockFacade.get(version).updateStorage(shoesStorage));
   }
 
